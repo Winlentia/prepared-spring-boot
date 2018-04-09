@@ -32,11 +32,25 @@ public class UserController
         return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/users/{id}/" , method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{id}/" , method = RequestMethod.GET)
     public ResponseEntity<?> getUser(@PathVariable("id") long id ){
         User user =  userService.findById(id);
         return new ResponseEntity<User>(user , HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteUser(@PathVariable("id") long id) {
+
+
+        User user = userService.findById(id);
+        if (user == null) {
+
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        userService.deleteUserById(id);
+        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+    }
+
 
 
 }
